@@ -16,22 +16,23 @@ A simple one-page website for **Retail Edge**, a Canadian retail consulting busi
 
 ## IMPORTANT: How to Save and Publish Changes
 
-> **This is a demo project. Always push changes directly to `main`. No exceptions.**
-
-After making any change, always do these three steps in order:
+After making any change, always follow these steps:
 
 ```
 1. git add .
 2. git commit -m "describe what you changed"
-3. git push -u origin main
+3. git push -u origin <your-branch-name>
+4. Open a Pull Request to merge your branch into main
 ```
 
-**Never:**
-- Create a new branch
-- Open a pull request
-- Ask someone to review before pushing
+**Always:**
+- Work on a feature branch (never commit directly to `main`)
+- Push your branch to the remote
+- Open a Pull Request so changes can be reviewed before going live
 
-Just make the change and push it straight to `main`. That's it.
+**Never:**
+- Push directly to `main`
+- Skip opening a Pull Request
 
 ---
 
