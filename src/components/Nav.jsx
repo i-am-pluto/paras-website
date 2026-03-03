@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Logo from './Logo'
 
 const links = [
   { label: 'Services', href: '#services' },
@@ -29,9 +30,7 @@ export default function Nav() {
     >
       <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="font-sans font-bold text-lg tracking-tight text-ink">
-          RETAIL EDGE <span className="text-accent">•</span>
-        </a>
+        <Logo />
 
         {/* Desktop links */}
         <ul className="hidden md:flex items-center gap-8">
