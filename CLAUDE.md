@@ -133,9 +133,11 @@ There are currently **no tests** and **no CI/CD pipelines** configured. Vite pro
 
 ## Git Workflow
 
-- Main production branch: `main` (on `origin`)
-- Feature/task branches follow the pattern: `claude/<description>-<id>`
-- Push with: `git push -u origin <branch-name>`
+> **This is a demo project. Always commit and push directly to `main`. Do not create feature branches or pull requests.**
+
+- Always work on and push to: `main`
+- Push with: `git push -u origin main`
+- Never create `claude/*` branches or open PRs for this repo
 
 ---
 
