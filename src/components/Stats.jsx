@@ -1,145 +1,112 @@
-import { useEffect, useRef, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
-function useCountUp(target, duration = 2000) {
-  const [count, setCount] = useState(0)
-  const startedRef = useRef(false)
-
-  const start = () => {
-    if (startedRef.current) return
-    startedRef.current = true
-    const startTime = performance.now()
-    const tick = (now) => {
-      const elapsed = now - startTime
-      const progress = Math.min(elapsed / duration, 1)
-      const eased = 1 - Math.pow(1 - progress, 3)
-      setCount(Math.round(eased * target))
-      if (progress < 1) requestAnimationFrame(tick)
-    }
-    requestAnimationFrame(tick)
-  }
-
-  return [count, start]
-}
-
-const highlights = [
+const pillars = [
   {
-    prefix: '',
-    value: 5,
-    suffix: '',
-    label: 'Core Services',
-    detail: 'Strategy · Pitch · Listing · Execution · Growth',
+    step: '01',
+    tag: 'Where to play',
+    title: 'Retail Strategy',
+    desc: 'We map your category, margin stack, and product stage to identify the right retailers — before a single email goes out.',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="7" height="7" rx="1" />
-        <rect x="14" y="3" width="7" height="7" rx="1" />
-        <rect x="3" y="14" width="7" height="7" rx="1" />
-        <rect x="14" y="14" width="7" height="7" rx="1" />
+      <svg viewBox="0 0 40 40" fill="none" className="w-10 h-10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M8 32L16 20L24 26L32 10" />
+        <circle cx="32" cy="10" r="3" />
+        <path d="M6 36H34" strokeWidth="2" opacity="0.3" />
       </svg>
     ),
   },
   {
-    prefix: '$',
-    value: 130,
-    suffix: 'B+',
-    label: 'Canadian Grocery Market',
-    detail: "Canada's largest retail sector — and we know every door in it.",
+    step: '02',
+    tag: 'How to get in',
+    title: 'Buyer Access',
+    desc: "We know the buyer landscape at Canada's major chains — who to call, what they need to see, and how to get a real meeting booked.",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
-        <polyline points="16 7 22 7 22 13" />
+      <svg viewBox="0 0 40 40" fill="none" className="w-10 h-10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="14" cy="14" r="6" />
+        <circle cx="28" cy="14" r="6" />
+        <path d="M6 32C6 26.477 9.582 22 14 22C18.418 22 22 26.477 22 32" />
+        <path d="M22 32C22 26.477 25.582 22 30 22" strokeDasharray="3 2" />
       </svg>
     ),
   },
   {
-    prefix: '',
-    value: 1,
-    suffix: '',
-    label: 'Free Intro Call',
-    detail: 'No pitch decks needed. Just tell us about your brand.',
+    step: '03',
+    tag: 'How to stay',
+    title: 'Growth Support',
+    desc: 'Getting listed is the beginning. We stay with you through in-store demos, reorder strategy, and ongoing velocity growth.',
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 010 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.92z" />
+      <svg viewBox="0 0 40 40" fill="none" className="w-10 h-10" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 6L34 12V22C34 29.18 27.84 35.26 20 37C12.16 35.26 6 29.18 6 22V12L20 6Z" />
+        <path d="M14 20L18 24L27 15" />
       </svg>
     ),
   },
 ]
 
 export default function Stats() {
-  const sectionRef = useRef(null)
-  const [hovered, setHovered] = useState(null)
-
-  const [c1, start1] = useCountUp(highlights[0].value)
-  const [c2, start2] = useCountUp(highlights[1].value)
-  const [c3, start3] = useCountUp(highlights[2].value)
-
-  const counts = [c1, c2, c3]
-  const starters = [start1, start2, start3]
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          starters.forEach((s) => s())
-          observer.disconnect()
-        }
-      },
-      { threshold: 0.3 }
-    )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
-
   return (
-    <section ref={sectionRef} className="bg-ink border-y border-white/10 py-20">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="bg-ink border-y border-white/10 py-20 overflow-hidden relative">
+      {/* Subtle green glow at bottom */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 50% 110%, #00c96e0a 0%, transparent 65%)' }}
+      />
+
+      <div className="relative max-w-7xl mx-auto px-6">
+        {/* Eyebrow */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="font-sans text-xs font-bold uppercase tracking-[0.2em] text-accent mb-12 text-center"
+        >
+          How We Work
+        </motion.p>
+
+        {/* Pillars */}
         <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-white/10">
-          {highlights.map((h, i) => (
+          {pillars.map((p, i) => (
             <motion.div
-              key={h.label}
+              key={p.step}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.12 }}
-              onMouseEnter={() => setHovered(i)}
-              onMouseLeave={() => setHovered(null)}
-              className="relative flex flex-col items-center text-center px-8 py-12 gap-3 cursor-default group"
+              className="group relative flex flex-col px-8 py-10 gap-5 cursor-default"
             >
-              {/* Icon */}
-              <div className="text-accent/50 group-hover:text-accent transition-colors duration-300 mb-1">
-                {h.icon}
+              {/* Top accent bar slides in on hover */}
+              <div className="absolute top-0 left-8 right-8 h-px bg-accent scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+
+              {/* Step number + icon row */}
+              <div className="flex items-start justify-between">
+                <span
+                  className="font-display font-black text-6xl text-white/8 group-hover:text-white/14 transition-colors duration-300 leading-none select-none"
+                  style={{ fontFamily: 'var(--font-display)' }}
+                >
+                  {p.step}
+                </span>
+                <div className="text-accent/45 group-hover:text-accent transition-colors duration-300 mt-1">
+                  {p.icon}
+                </div>
               </div>
 
-              {/* Number */}
-              <span
-                className="font-display font-black text-6xl lg:text-7xl text-white leading-none"
+              {/* Tag */}
+              <span className="font-sans text-xs font-bold uppercase tracking-widest text-accent/45 group-hover:text-accent transition-colors duration-300">
+                {p.tag}
+              </span>
+
+              {/* Title */}
+              <h3
+                className="font-display font-black text-2xl text-white leading-snug"
                 style={{ fontFamily: 'var(--font-display)' }}
               >
-                {h.prefix}
-                {counts[i]}
-                <span className="text-accent">{h.suffix}</span>
-              </span>
+                {p.title}
+              </h3>
 
-              {/* Label */}
-              <span className="font-sans font-semibold text-sm text-white/60 uppercase tracking-wider">
-                {h.label}
-              </span>
-
-              {/* Detail reveal on hover */}
-              <AnimatePresence>
-                {hovered === i && (
-                  <motion.p
-                    key="detail"
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 4 }}
-                    transition={{ duration: 0.22 }}
-                    className="font-sans text-xs text-white/40 leading-relaxed max-w-[200px] mt-1"
-                  >
-                    {h.detail}
-                  </motion.p>
-                )}
-              </AnimatePresence>
+              {/* Description */}
+              <p className="font-sans text-sm text-white/45 leading-relaxed group-hover:text-white/65 transition-colors duration-300">
+                {p.desc}
+              </p>
             </motion.div>
           ))}
         </div>
